@@ -7,8 +7,8 @@ import (
 	"github.com/subosito/markovic/cmark"
 )
 
-func TestMarkdownHTML(t *testing.T) {
-	s := cmark.MarkdownHTML("# Hello", 0)
+func TestHTML(t *testing.T) {
+	s := cmark.HTML("# Hello", 0)
 	assert.Equal(t, "<h1>Hello</h1>\n", s)
 }
 
