@@ -14,5 +14,5 @@ func TestMarkdownHTML(t *testing.T) {
 
 func TestVersion(t *testing.T) {
 	v := cmark.Version()
-	assert.Equal(t, 6657, v)
+	assert.Equal(t, "0.26.1", v)
 }

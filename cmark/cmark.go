@@ -19,6 +19,6 @@ func MarkdownHTML(s string, flags int) string {
 	return C.GoString(cOut)
 }
 
-func Version() int {
-	return int(C.cmark_version())
+func Version() string {
+	return C.GoString(C.cmark_version_string())
 }
