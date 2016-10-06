@@ -16,3 +16,31 @@ func TestVersion(t *testing.T) {
 	v := cmark.Version()
 	assert.Equal(t, "0.26.1", v)
 }
+
+func TestOptions(t *testing.T) {
+	table := []struct {
+		opts   cmark.Option
+		input  string
+		output string
+	}{
+		{cmark.OPTION_DEFAULT, "# Hello", "<h1>Hello</h1>\n"},
+		{cmark.OPTION_SOURCEPOS, "# Hello", "<h1 data-sourcepos=\"1:1-1:7\">Hello</h1>\n"},
+
+		{cmark.OPTION_DEFAULT, "Hello\nWorld!", "<p>Hello\nWorld!</p>\n"},
+		{cmark.OPTION_HARDBREAKS, "Hello\nWorld!", "<p>Hello<br />\nWorld!</p>\n"},
+
+		{cmark.OPTION_DEFAULT, `Hello <script>alert('hello');</script>`, "<p>Hello <script>alert('hello');</script></p>\n"},
+		{cmark.OPTION_SAFE, `Hello <script>alert('hello');</script>`, "<p>Hello <!-- raw HTML omitted -->alert('hello');<!-- raw HTML omitted --></p>\n"},
+
+		{cmark.OPTION_DEFAULT, "Hello\nWorld!", "<p>Hello\nWorld!</p>\n"},
+		{cmark.OPTION_NOBREAKS, "Hello\nWorld!", "<p>Hello World!</p>\n"},
+
+		{cmark.OPTION_DEFAULT, "# Hello--World", "<h1>Hello--World</h1>\n"},
+		{cmark.OPTION_SMART, "# Hello--World", "<h1>Hello–World</h1>\n"},
+	}
+
+	for _, data := range table {
+		s := cmark.HTML(data.input, data.opts)
+		assert.Equal(t, data.output, s)
+	}
+}

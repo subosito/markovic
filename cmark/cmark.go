@@ -19,7 +19,20 @@ const (
 	FORMAT_LATEX
 )
 
-func HTML(s string, options int) string {
+type Option int
+
+const (
+	OPTION_DEFAULT   Option = iota
+	OPTION_SOURCEPOS        = 1 << iota
+	OPTION_HARDBREAKS
+	OPTION_SAFE
+	OPTION_NOBREAKS
+	OPTION_NORMALIZE = 1 << iota * 8
+	OPTION_VALIDATE_UTF8
+	OPTION_SMART
+)
+
+func HTML(s string, options Option) string {
 	return render(s, FORMAT_HTML, options, 0)
 }
 
@@ -27,7 +40,7 @@ func Version() string {
 	return C.GoString(C.cmark_version_string())
 }
 
-func render(s string, format Format, options, width int) string {
+func render(s string, format Format, options Option, width int) string {
 	cstr := C.CString(s)
 	defer C.free(unsafe.Pointer(cstr))
 
@@ -56,22 +69,22 @@ func render(s string, format Format, options, width int) string {
 	return C.GoString(doc)
 }
 
-func html(node *C.struct_cmark_node, options int) *C.char {
+func html(node *C.struct_cmark_node, options Option) *C.char {
 	return C.cmark_render_html(node, C.int(options))
 }
 
-func xml(node *C.struct_cmark_node, options int) *C.char {
+func xml(node *C.struct_cmark_node, options Option) *C.char {
 	return C.cmark_render_xml(node, C.int(options))
 }
 
-func man(node *C.struct_cmark_node, options, width int) *C.char {
+func man(node *C.struct_cmark_node, options Option, width int) *C.char {
 	return C.cmark_render_man(node, C.int(options), C.int(width))
 }
 
-func commonmark(node *C.struct_cmark_node, options, width int) *C.char {
+func commonmark(node *C.struct_cmark_node, options Option, width int) *C.char {
 	return C.cmark_render_commonmark(node, C.int(options), C.int(width))
 }
 
-func latex(node *C.struct_cmark_node, options, width int) *C.char {
+func latex(node *C.struct_cmark_node, options Option, width int) *C.char {
 	return C.cmark_render_latex(node, C.int(options), C.int(width))
 }
