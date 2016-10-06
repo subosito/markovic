@@ -36,6 +36,22 @@ func HTML(s string, options Option) string {
 	return render(s, FORMAT_HTML, options, 0)
 }
 
+func XML(s string, options Option) string {
+	return render(s, FORMAT_XML, options, 0)
+}
+
+func Man(s string, options Option, width int) string {
+	return render(s, FORMAT_MAN, options, width)
+}
+
+func CommonMark(s string, options Option, width int) string {
+	return render(s, FORMAT_COMMONMARK, options, width)
+}
+
+func Latex(s string, options Option, width int) string {
+	return render(s, FORMAT_LATEX, options, width)
+}
+
 func Version() string {
 	return C.GoString(C.cmark_version_string())
 }

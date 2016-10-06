@@ -8,8 +8,28 @@ import (
 )
 
 func TestHTML(t *testing.T) {
-	s := cmark.HTML("# Hello", 0)
+	s := cmark.HTML("# Hello", cmark.OPTION_DEFAULT)
 	assert.Equal(t, "<h1>Hello</h1>\n", s)
+}
+
+func TestXML(t *testing.T) {
+	s := cmark.XML("# Hello", cmark.OPTION_DEFAULT)
+	assert.Equal(t, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE document SYSTEM \"CommonMark.dtd\">\n<document xmlns=\"http://commonmark.org/xml/1.0\">\n  <heading level=\"1\">\n    <text>Hello</text>\n  </heading>\n</document>\n", s)
+}
+
+func TestMan(t *testing.T) {
+	s := cmark.Man("# Hello", cmark.OPTION_DEFAULT, 10)
+	assert.Equal(t, ".SH\nHello\n", s)
+}
+
+func TestCommonMark(t *testing.T) {
+	s := cmark.CommonMark("# Hello", cmark.OPTION_DEFAULT, 10)
+	assert.Equal(t, "# Hello\n", s)
+}
+
+func TestLatex(t *testing.T) {
+	s := cmark.Latex("# Hello", cmark.OPTION_DEFAULT, 10)
+	assert.Equal(t, "\\section{Hello}\n", s)
 }
 
 func TestVersion(t *testing.T) {
