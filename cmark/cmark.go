@@ -58,14 +58,12 @@ func Version() string {
 
 func render(s string, format Format, options Option, width int) string {
 	cstr := C.CString(s)
-	defer C.free(unsafe.Pointer(cstr))
-
 	clen := C.size_t(len(s))
 	node := C.cmark_parse_document(cstr, clen, C.int(options))
-	defer C.cmark_node_free(node)
+
+	C.free(unsafe.Pointer(cstr))
 
 	var doc *C.char
-	defer C.free(unsafe.Pointer(doc))
 
 	switch format {
 	case FORMAT_HTML:
@@ -81,6 +79,9 @@ func render(s string, format Format, options Option, width int) string {
 	default:
 		return ""
 	}
+
+	C.cmark_node_free(node)
+	C.free(unsafe.Pointer(doc))
 
 	return C.GoString(doc)
 }

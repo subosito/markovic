@@ -4,6 +4,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/miekg/mmark"
+	"github.com/russross/blackfriday"
 	"github.com/stretchr/testify/assert"
 	"github.com/subosito/markovic"
 	"github.com/subosito/markovic/cmark"
@@ -42,4 +44,26 @@ func TestLatex(t *testing.T) {
 func TestVersion(t *testing.T) {
 	v := cmark.Version()
 	assert.Equal(t, "0.26.1", v)
+}
+
+func BenchmarkHTML_Markovic(b *testing.B) {
+	r := strings.NewReader("# Hello")
+
+	for n := 0; n < b.N; n++ {
+		markovic.HTML(r)
+	}
+}
+
+func BenchmarkHTML_BlackFriday(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		blackfriday.MarkdownBasic([]byte("# Hello"))
+	}
+}
+
+func BenchmarkHTML_MMark(b *testing.B) {
+	renderer := mmark.HtmlRenderer(0, "", "")
+
+	for n := 0; n < b.N; n++ {
+		mmark.Parse([]byte("# Hello"), renderer, 0)
+	}
 }
