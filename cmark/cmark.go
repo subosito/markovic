@@ -48,7 +48,7 @@ func CommonMark(s string, options Option, width int) string {
 	return render(s, FORMAT_COMMONMARK, options, width)
 }
 
-func Latex(s string, options Option, width int) string {
+func LaTeX(s string, options Option, width int) string {
 	return render(s, FORMAT_LATEX, options, width)
 }
 

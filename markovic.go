@@ -23,7 +23,7 @@ func CommonMark(r io.Reader, width int) string {
 	return renderWidth(r, "commonmark", width)
 }
 
-func Latex(r io.Reader, width int) string {
+func LaTeX(r io.Reader, width int) string {
 	return renderWidth(r, "latex", width)
 }
 
@@ -49,7 +49,7 @@ func renderWidth(r io.Reader, format string, width int) string {
 	case "commonmark":
 		return cmark.CommonMark(string(b), option, width)
 	case "latex":
-		return cmark.Latex(string(b), option, width)
+		return cmark.LaTeX(string(b), option, width)
 	}
 
 	return ""

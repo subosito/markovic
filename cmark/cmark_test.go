@@ -27,8 +27,8 @@ func TestCommonMark(t *testing.T) {
 	assert.Equal(t, "# Hello\n", s)
 }
 
-func TestLatex(t *testing.T) {
-	s := cmark.Latex("# Hello", cmark.OPTION_DEFAULT, 10)
+func TestLaTeX(t *testing.T) {
+	s := cmark.LaTeX("# Hello", cmark.OPTION_DEFAULT, 10)
 	assert.Equal(t, "\\section{Hello}\n", s)
 }
 
