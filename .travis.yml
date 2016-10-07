@@ -1,6 +1,5 @@
+sudo: false
 language: go
-dist: trusty
-sudo: required
 os:
 - linux
 - osx
