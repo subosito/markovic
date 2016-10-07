@@ -1,5 +1,7 @@
 # marković
 
+[![GoDoc](https://godoc.org/github.com/subosito/markovic?status.svg)](https://godoc.org/github.com/subosito/markovic)
+
 Go wrapper for [libcmark](https://github.com/jgm/cmark), a [CommonMark](http://commonmark.org/) parsing and rendering library.
 
 ## Installation
