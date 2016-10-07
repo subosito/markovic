@@ -46,7 +46,7 @@ func TestVersion(t *testing.T) {
 	assert.Equal(t, "0.26.1", v)
 }
 
-func BenchmarkHTML_Markovic(b *testing.B) {
+func BenchmarkHTML_Marković(b *testing.B) {
 	r := strings.NewReader("# Hello")
 
 	for n := 0; n < b.N; n++ {
