@@ -35,7 +35,7 @@ func TestCommonMark(t *testing.T) {
 	assert.Equal(t, "# Hello\n", s)
 }
 
-func TestLatex(t *testing.T) {
+func TestLaTeX(t *testing.T) {
 	r := strings.NewReader("# Hello")
 	s := markovic.LaTeX(r, 10)
 	assert.Equal(t, "\\section{Hello}\n", s)
